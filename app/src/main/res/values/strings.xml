@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">DrawPractice</string>
+    <string name="app_name1">划线</string>
+    <string name="app_name2">签名</string>
+    <string name="app_name3">撕衣服</string>
+    <string name="app_name4">指示器</string>
+</resources>
