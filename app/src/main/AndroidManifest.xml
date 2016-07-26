@@ -26,7 +26,8 @@
             android:label="@string/app_name3" />
         <activity
             android:name=".activity.IndicatorActivity"
-            android:label="@string/app_name4"></activity>
+            android:label="@string/app_name4" />
+        <activity android:name=".activity.PaintActivity"></activity>
     </application>
 
 </manifest>

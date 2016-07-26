@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.draw.practice.utils.L;
+
 /**
  * Created by xugang on 2016/7/19.
  * Describe 跟随手指划线
@@ -17,8 +19,6 @@ import android.view.View;
 public class DrawLineFollowFingerView extends View {
     private Paint mPaint;//绘制线条的Path
     private Path mPath;//记录用户绘制的Path
-    private Canvas mCanvas;//内存中创建的Canvas
-    private Bitmap mBitmap;//缓存绘制内容
 
     private int mLastX;
     private int mLastY;
@@ -49,16 +49,6 @@ public class DrawLineFollowFingerView extends View {
     }
 
     @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = getMeasuredWidth();
-        int height = getMeasuredHeight();
-        // 初始化bitmap,Canvas
-        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(mBitmap);
-    }
-
-    @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         int x = (int) event.getX();
@@ -86,7 +76,7 @@ public class DrawLineFollowFingerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mCanvas.drawPath(mPath, mPaint);
-        canvas.drawBitmap(mBitmap, 0, 0, null);
+        L.d("onDraw");
+        canvas.drawPath(mPath, mPaint);
     }
 }
