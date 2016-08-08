@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -51,6 +52,7 @@ public class DrawLineFollowFingerView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.d("==================","onMeasure");
         int width = getMeasuredWidth();
         int height = getMeasuredHeight();
         // 初始化bitmap,Canvas
@@ -86,6 +88,7 @@ public class DrawLineFollowFingerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        Log.d("==================","onDraw");
         mCanvas.drawPath(mPath, mPaint);
         canvas.drawBitmap(mBitmap, 0, 0, null);
     }
