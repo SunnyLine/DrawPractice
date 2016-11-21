@@ -39,8 +39,8 @@ public class CalligraphyView extends View {
     private Bezier lastBezier;
     private float lastX;
     private float lastY;
-    private float wfactor;
-    private long stime;
+    private float wFactor;
+    private long sTime;
     private int width;
     private int height;
     private Handler mHandler;
@@ -65,8 +65,8 @@ public class CalligraphyView extends View {
         init();
     }
 
-    public void setOnSignatureReadyListener(SignatureReadyListener shbd) {
-        signatureReadyListener = shbd;
+    public void setOnSignatureReadyListener(SignatureReadyListener signatureReadyListener) {
+        this.signatureReadyListener = signatureReadyListener;
     }
 
     private void init() {
@@ -87,8 +87,8 @@ public class CalligraphyView extends View {
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
+    protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
         if (w != 0 && h != 0) {
             buildBitmap(w, h);
         }
@@ -258,8 +258,8 @@ public class CalligraphyView extends View {
         if (mPoint.size() == 0) {
             mPoint.add(p);
             lastWidth = 0;
-            wfactor = 0;
-            stime = e.getEventTime();
+            wFactor = 0;
+            sTime = e.getEventTime();
             lastBezier = null;
             p.width = lastWidth;
         } else {
@@ -280,14 +280,12 @@ public class CalligraphyView extends View {
             percent = 1;
         else if (percent < 0)
             percent = 0;
-        if (wfactor < 1)
-            wfactor = (p.time - stime) / (float) DELAY_START_TIME_FACTOR;
-        if (wfactor > 1)
-            wfactor = 1;
-        p.width = (maxStroke - minStroke) * percent * p.width * wfactor
+        if (wFactor < 1)
+            wFactor = (p.time - sTime) / (float) DELAY_START_TIME_FACTOR;
+        if (wFactor > 1)
+            wFactor = 1;
+        p.width = (maxStroke - minStroke) * percent * p.width * wFactor
                 + minStroke;
-        // android.util.Log.i("tangye", "wf=" + wfactor + " per=" + percent +
-        // " w=" + p.width);
         addBezier(bezier, lastWidth, p.width);
         lastVelocity = velocity;
         lastWidth = p.width;
@@ -297,10 +295,9 @@ public class CalligraphyView extends View {
         int len = mPoint.size();
         if (len > 2 && lastBezier != null) {
             Point p = mPoint.get(len - 1);
-            float x = (p.x - lastBezier.startx) * 3 + p.x;
-            float y = (p.y - lastBezier.starty) * 3 + p.y;
+            float x = (p.x - lastBezier.startX) * 3 + p.x;
+            float y = (p.y - lastBezier.startY) * 3 + p.y;
             Point pe = new Point(x, y, p.time + 1, 0);
-            // addPoint(pe);
             Bezier bezier = new Bezier(p, pe);
             addBezier(bezier, lastWidth, 0);
         }
@@ -350,7 +347,7 @@ public class CalligraphyView extends View {
 
     private class Bezier {
         private Point startPoint, endPoint;
-        private float startx, starty;
+        private float startX, startY;
 
         public Bezier(Point lp, Point p) {
             startPoint = lp;
@@ -364,50 +361,42 @@ public class CalligraphyView extends View {
             int roundDelta = (int) Math.ceil(Math.abs(widthDelta));
             int drawSteps = roundDelta > 0 ? roundDelta * 10 : 10;
             if (lastBezier == null) {
-                startx = (startPoint.x + endPoint.x) / 2;
-                starty = (startPoint.y + endPoint.y) / 2;
-                float lastx = startPoint.x;
-                float lasty = startPoint.y;
+                startX = (startPoint.x + endPoint.x) / 2;
+                startY = (startPoint.y + endPoint.y) / 2;
+                float lastX = startPoint.x;
+                float lastY = startPoint.y;
                 for (int i = 1; i < drawSteps; i++) {
                     float t = ((float) i) / drawSteps;
-                    float x = startPoint.x + (startx - startPoint.x) * t;
-                    float y = startPoint.y + (starty - startPoint.y) * t;
+                    float x = startPoint.x + (startX - startPoint.x) * t;
+                    float y = startPoint.y + (startY - startPoint.y) * t;
 
                     paint.setStrokeWidth(startWidth + t * widthDelta);
-                    canvas.drawLine(lastx, lasty, x, y, paint);
+                    canvas.drawLine(lastX, lastY, x, y, paint);
                     // canvas.drawPoint(x, y, paint);
-                    lastx = x;
-                    lasty = y;
+                    lastX = x;
+                    lastY = y;
                 }
-                lastX = startx;
-                lastY = starty;
+                CalligraphyView.this.lastX = startX;
+                CalligraphyView.this.lastY = startY;
                 lastBezier = this;
             } else {
-                float lastx = lastBezier.startx;
-                float lasty = lastBezier.starty;
+                float lastX = lastBezier.startX;
+                float lastY = lastBezier.startY;
                 float cx = startPoint.x;
                 float cy = startPoint.y;
-                startx = (startPoint.x + endPoint.x) / 2;
-                starty = (startPoint.y + endPoint.y) / 2;
+                startX = (startPoint.x + endPoint.x) / 2;
+                startY = (startPoint.y + endPoint.y) / 2;
                 for (int i = 0; i < drawSteps; i++) {
                     float t = ((float) i) / drawSteps;
                     float tt = t * t;
-                    /*
-					 * float x1 = lastx + (cx - lastx) * t; float y1 = lasty +
-					 * (cy - lasty) * t; float x2 = cx + (startx - cx) * t;
-					 * float y2 = cy + (starty - cy) * t; float x = x1 + (x2 -
-					 * x1) * t; float y = y1 + (y2 - y1) * t;
-					 */
-                    float x = lastx + 2 * (cx - lastx) * t
-                            + (startx - 2 * cx + lastx) * tt;
-                    float y = lasty + 2 * (cy - lasty) * t
-                            + (starty - 2 * cy + lasty) * tt;
+                    float x = lastX + 2 * (cx - lastX) * t
+                            + (startX - 2 * cx + lastX) * tt;
+                    float y = lastY + 2 * (cy - lastY) * t
+                            + (startY - 2 * cy + lastY) * tt;
                     paint.setStrokeWidth(startWidth + t * widthDelta);
-                    canvas.drawLine(lastX, lastY, x, y, paint);
-                    // canvas.drawPoint(x,y,paint);
-                    // paint.setStrokeWidth(1);
-                    lastX = x;
-                    lastY = y;
+                    canvas.drawLine(CalligraphyView.this.lastX, CalligraphyView.this.lastY, x, y, paint);
+                    CalligraphyView.this.lastX = x;
+                    CalligraphyView.this.lastY = y;
                 }
                 lastBezier = this;
             }
