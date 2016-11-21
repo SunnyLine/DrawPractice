@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -48,6 +49,20 @@ public class DrawLineFollowFingerView extends View {
     }
 
     @Override
+<<<<<<< HEAD
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.d("==================","onMeasure");
+        int width = getMeasuredWidth();
+        int height = getMeasuredHeight();
+        // 初始化bitmap,Canvas
+        mBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mCanvas = new Canvas(mBitmap);
+    }
+
+    @Override
+=======
+>>>>>>> 61db98369dded3cdd7af63c7dfd64f3e8b68eb97
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         int x = (int) event.getX();
@@ -75,7 +90,13 @@ public class DrawLineFollowFingerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+<<<<<<< HEAD
+        Log.d("==================","onDraw");
+        mCanvas.drawPath(mPath, mPaint);
+        canvas.drawBitmap(mBitmap, 0, 0, null);
+=======
         L.d("onDraw");
         canvas.drawPath(mPath, mPaint);
+>>>>>>> 61db98369dded3cdd7af63c7dfd64f3e8b68eb97
     }
 }
