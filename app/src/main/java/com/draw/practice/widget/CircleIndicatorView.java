@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.AnimRes;
+import android.support.annotation.AnimatorRes;
 import android.support.annotation.DrawableRes;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -25,7 +26,7 @@ public class CircleIndicatorView extends LinearLayout {
     private int mIndicatorMargin = -1;
     private int mIndicatorWidth = -1;
     private int mIndicatorHeight = -1;
-    private int mAnimatorResId = R.anim.scale_with_alpha;
+    private @AnimatorRes int mAnimatorResId = R.animator.scale_with_alpha;
     private int mAnimatorReverseResId = 0;
     private int mIndicatorBackgroundResId = R.drawable.white_radius;
     private int mIndicatorUnselectedBackgroundResId = R.drawable.black_radius;
@@ -84,11 +85,11 @@ public class CircleIndicatorView extends LinearLayout {
      */
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin) {
         configureIndicator(indicatorWidth, indicatorHeight, indicatorMargin,
-                R.anim.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
+                R.animator.scale_with_alpha, 0, R.drawable.white_radius, R.drawable.white_radius);
     }
 
     public void configureIndicator(int indicatorWidth, int indicatorHeight, int indicatorMargin,
-                                   @AnimRes int animatorId, @AnimRes int animatorReverseId,
+                                   @AnimatorRes int animatorId, @AnimatorRes int animatorReverseId,
                                    @DrawableRes int indicatorBackgroundId,
                                    @DrawableRes int indicatorUnselectedBackgroundId) {
 
@@ -111,7 +112,7 @@ public class CircleIndicatorView extends LinearLayout {
         mIndicatorMargin =
                 (mIndicatorMargin < 0) ? dip2px(DEFAULT_INDICATOR_WIDTH) : mIndicatorMargin;
 
-        mAnimatorResId = (mAnimatorResId == 0) ? R.anim.scale_with_alpha : mAnimatorResId;
+        mAnimatorResId = (mAnimatorResId == 0) ? R.animator.scale_with_alpha : mAnimatorResId;
 
         mAnimatorOut = createAnimatorOut(context);
         mImmediateAnimatorOut = createAnimatorOut(context);
