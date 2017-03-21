@@ -1,6 +1,7 @@
 package com.draw.practice.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -22,6 +23,9 @@ public class DrawLineFollowFingerView extends View {
 
     private int mLastX;
     private int mLastY;
+
+    private Bitmap mBitmap;
+    private Canvas mCanvas;
 
     public DrawLineFollowFingerView(Context context) {
         this(context, null);
@@ -49,7 +53,6 @@ public class DrawLineFollowFingerView extends View {
     }
 
     @Override
-<<<<<<< HEAD
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         Log.d("==================","onMeasure");
@@ -61,8 +64,6 @@ public class DrawLineFollowFingerView extends View {
     }
 
     @Override
-=======
->>>>>>> 61db98369dded3cdd7af63c7dfd64f3e8b68eb97
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         int x = (int) event.getX();
@@ -90,13 +91,10 @@ public class DrawLineFollowFingerView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-<<<<<<< HEAD
         Log.d("==================","onDraw");
         mCanvas.drawPath(mPath, mPaint);
         canvas.drawBitmap(mBitmap, 0, 0, null);
-=======
         L.d("onDraw");
         canvas.drawPath(mPath, mPaint);
->>>>>>> 61db98369dded3cdd7af63c7dfd64f3e8b68eb97
     }
 }
