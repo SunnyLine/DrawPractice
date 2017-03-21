@@ -68,7 +68,7 @@ public class CircleIndicatorView extends LinearLayout {
                 typedArray.getDimensionPixelSize(R.styleable.CircleIndicator_ci_margin, -1);
 
         mAnimatorResId = typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator,
-                R.animator.scale_with_alpha);
+                R.anim.scale_with_alpha);
         mAnimatorReverseResId =
                 typedArray.getResourceId(R.styleable.CircleIndicator_ci_animator_reverse, 0);
         mIndicatorBackgroundResId =
